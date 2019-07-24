@@ -1,5 +1,6 @@
 <script>
   import { username, hasKey, lastKey } from '@stores';
+  import { navigateTo } from 'svero'
   import { database } from '@config/firebase'
 
   let temp = []
@@ -10,12 +11,12 @@
   lastKey.update(value => value = uniqueID)
 
   // check username is exists
-  // if($username == null){
-  //   $username = prompt('Input your name : ')
-  //   while($username == null || $username.length == 0){
-  //     $username = prompt('Input your name : ')
-  //   }
-  // }
+  if($username == null){
+    $username = prompt('Input your name : ')
+    while($username == null || $username.length == 0){
+      $username = prompt('Input your name : ')
+    }
+  }
 
   const MAX_SCORE = 100
 
@@ -90,8 +91,11 @@
     }, function(error) {
       if (error)
         console.log(error)
-      else 
+      else {
+        navigateTo('/')
         console.log('data has been saved')
+      }
+        
     })
   }
 
@@ -112,7 +116,6 @@
         score += (MAX_SCORE / totalQuestion)
     })
     writeScore(uniqueID, $username, score, navigator.userAgent, getDate())
-    console.log('score : ', score)
   }
 
 </script>
