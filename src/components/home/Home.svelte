@@ -21,7 +21,6 @@
 
     // sorting high_score (priority : high_score, current_score)
     temp = sorted(temp)
-    console.log(temp)
     participants = temp.length
   })
 
