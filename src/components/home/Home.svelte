@@ -177,7 +177,7 @@
     {#if !$hasKey}
       <div class="btn-play" on:click={playGame}>Take Quiz</div>
     {:else}
-      <div class="btn-play" on:click={playGame}>Back to Game</div>
+      <div class="btn-play" on:click={playGame}>Take Quiz Again</div>
     {/if}
     <div class="helmet-accesories">
       <label class="helmet-title">Townhall Quiz</label>
