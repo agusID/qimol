@@ -134,7 +134,7 @@ function webpackConfig(environment) {
 
     plugins: [
       createHTML({
-        title: 'Townhall',
+        title: 'TOWNHALL - Beyond To Be Sixnificant',
         template: appResolve('public/index.html'),
       }),
 
