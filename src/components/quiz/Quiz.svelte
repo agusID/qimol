@@ -187,20 +187,6 @@
     return i
   }
 
-  // function reset() {
-
-
-  //   milisec = 0
-  //   sec = 0
-  //   min = 0
-  //   hour = 0
-
-  //   document.getElementById("milisec").innerHTML = "00"
-  //   document.getElementById("sec").innerHTML = "00"
-  //   document.getElementById("min").innerHTML = "00"
-  //   document.getElementById("hour").innerHTML = "00"
-
-  // }
 </script>
 <style>
   .loader-container {
