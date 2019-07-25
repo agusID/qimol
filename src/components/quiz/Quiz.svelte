@@ -18,6 +18,10 @@
   let secOut = 0
   let minOut = 0
   let tick = 0
+  
+  // timer
+  let x
+  let startstop = 0
 
   // check username is exists
   if($username == null){
@@ -131,10 +135,6 @@
     let time = `${min}m ${sec}s`
     writeScore(uniqueID, $username, score, navigator.userAgent, tick, time)
   }
-
-  // timer
-  let x
-  let startstop = 0
 
   function startStop() { /* Toggle StartStop */
 

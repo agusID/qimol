@@ -6,7 +6,7 @@
   
   const crowns = ['gold.png', 'silver.png', 'bronze.png']
   let temp = []
-  $: participants = 0
+  let participants = 0
 
    // get score data
   let usersRef = database.ref('scoreboard')
@@ -55,6 +55,11 @@
     align-items: center;
     padding: 10px 0;
     text-decoration: none;
+  }
+
+  .disabled {
+    background-color: #ecf0f1;
+    color: #34495e;
   }
 
   .helmet-accesories > .helmet-title {
@@ -243,7 +248,7 @@
         {#if !$hasKey}
           <div class="btn-play" on:click={playGame}>Take Quiz</div>
         {:else}
-          <div class="btn-play" on:click={playGame}>Take Quiz Again</div>
+          <div class="btn-play disabled" on:click={playGame}>Take Quiz</div>
         {/if}
       </div>
     {:else}
