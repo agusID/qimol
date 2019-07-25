@@ -1,0 +1,2 @@
+[permalinks]
+    post = "/:year/:month/:day/:slug/"
