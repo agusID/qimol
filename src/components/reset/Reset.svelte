@@ -2,7 +2,9 @@
   import { database } from '@config/firebase.js'
   let token = ''
   let questionJSON = ''
-  let takeQuizButton = 1
+  let takeQuizButton = 0
+  let freezeScoreboard = 0
+
   $: message = ''
   $: JSONmessage = ''
 
@@ -11,6 +13,14 @@
     snapshot.forEach(function(childSnapshot) {
       let childData = childSnapshot.val()
       takeQuizButton = childData
+    }) 
+  })
+
+  let freezeScoreboardnConf = database.ref('app/freeze_scoreboard')
+  freezeScoreboardnConf.on('value', function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      let childData = childSnapshot.val()
+      freezeScoreboard = childData
     }) 
   })
 
@@ -60,6 +70,10 @@
       addQuestion(value.answer_1, value.answer_2, value.answer_3, value.answer_4, value.correct_answer, value.question)
     })
     questionJSON = ''
+  }
+
+  function handleFreezeScoreboard() {
+    database.ref('app/freeze_scoreboard').set({ value: freezeScoreboard})
   }
 
   function handleQuizButton() {
@@ -152,6 +166,7 @@
     <label>
       <input type="checkbox" on:change={handleQuizButton} bind:checked={takeQuizButton}> Take Quiz Button
     </label>
+
     
     <h4>Reset Scoreboard</h4>
     <div class="flex">
@@ -159,4 +174,9 @@
       <button class="btn-reset" class:disabled={token.length === 0} on:click={reset}>RESET</button>
     </div>
     <p class="message">{message}</p>
+    <label>
+      <input type="checkbox" on:change={handleFreezeScoreboard} bind:checked={freezeScoreboard}> Freeze Scoreboard
+    </label>
+    <br>
+    <br>
 </div>

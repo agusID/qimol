@@ -8,6 +8,7 @@
   let temp = []
   let participants = 0
   let FirebaseActiveButton = 0
+  let FirebaseFreezeScoreboard = 0
 
   let takeQuizButtonConf = database.ref('app/take_quiz_button')
   takeQuizButtonConf.on('value', function(snapshot) {
@@ -16,6 +17,15 @@
       FirebaseActiveButton = childData
     }) 
   })
+
+  let freezeScoreboardConf = database.ref('app/freeze_scoreboard')
+  freezeScoreboardConf.on('value', function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      let childData = childSnapshot.val()
+      FirebaseFreezeScoreboard = childData
+    }) 
+  })
+
 
    // get score data
   let usersRef = database.ref('scoreboard')
@@ -243,7 +253,9 @@
     </div>
   </div>
   <div class="armour">
-    {#if temp.length >= 0}
+    {#if FirebaseFreezeScoreboard}
+      <p>scoreboard is freezed</p>
+    {:else if temp.length >= 0}
       <table class="table">
         <thead>
           <tr>
@@ -282,17 +294,17 @@
           {/if}
         </tbody>
       </table>
-      {#if FirebaseActiveButton}
-        <div class="shoes">
-          {#if !$hasKey}
-            <div class="btn-play" on:click={playGame}>Take Quiz</div>
-          {:else}
-            <div class="btn-play disabled" on:click={playGame}>Take Quiz</div>
-          {/if}
-        </div>
-      {/if}
     {:else}
       <p>Please wait a few seconds...</p>
+    {/if}
+    {#if FirebaseActiveButton}
+      <div class="shoes">
+        {#if !$hasKey}
+          <div class="btn-play" on:click={playGame}>Take Quiz</div>
+        {:else}
+          <div class="btn-play disabled" on:click={playGame}>Take Quiz</div>
+        {/if}
+      </div>
     {/if}
   </div>
 </div>
