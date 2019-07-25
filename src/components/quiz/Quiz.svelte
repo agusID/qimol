@@ -92,7 +92,8 @@
     })
     if(exists == false)
       userAnswer.push({questin_no: no, unique_id: id, answer: answer})
-    activeSubmit = true
+    if(userAnswer.length === totalQuestion)
+      activeSubmit = true
   }
 
   function writeScore(unique_id, name, score, user_agent, date, time) {
