@@ -1,7 +1,7 @@
 {
   "name": "Townhall",
   "short_name": "Townhall",
-  "theme_color": "#f58220",
+  "theme_color": "#252c4a",
   "background_color": "#fff",
   "display": "standalone",
   "orientation": "portrait",
