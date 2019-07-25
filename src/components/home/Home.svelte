@@ -130,6 +130,10 @@
     color: #ecf0f1;
   }
 
+  .table tr.active .time {
+    background-color: #2c3e50;
+  }
+
   .table td {
     padding: 5px;
   }
