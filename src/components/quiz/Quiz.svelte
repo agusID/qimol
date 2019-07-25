@@ -69,7 +69,7 @@
 
   function btnPrev() {
     currQuestion -= 1
-    if(currQuestion <= totalQuestion)
+    if(currQuestion <= 0)
       currQuestion = 0
     unCheck(currQuestion)
   }
