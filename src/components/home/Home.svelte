@@ -56,21 +56,29 @@
     align-items: center;
     padding: 10px 0;
     text-decoration: none;
+    user-select: none;
   }
 
   .disabled {
     background-color: #ecf0f1 !important;
     color: #34495e !important;
   }
+  .helmet-accesories {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   .helmet-accesories > .helmet-title {
     color: white;
-    padding: 5px 10px;
+    font-size: 18px;
+    padding: 5px 0;
   }
 
   .accessories {
     font-size: 14px;
-    padding: 5px 10px;
+    padding: 5px 0;
     color: #84aebf;
   }
 
@@ -80,7 +88,8 @@
 
   .armour {
     overflow-x: scroll;
-    margin-bottom: 25px;
+    margin-top: 10px;
+    margin-bottom: 40px;
   }
 
   .table {
@@ -89,6 +98,7 @@
     color: white;
     border-collapse: collapse;
     margin-bottom: 20px;
+    user-select: none;
   }
 
   .table tbody {
@@ -143,6 +153,22 @@
     font-weight: bold;
   }
 
+  .user-agent {
+    font-size: 10px;
+  }
+
+  .score {
+    font-size: 20px;
+    padding: 5px 0;
+  }
+
+  .time {
+    color: white !important;
+    padding: 2px 5px;
+    border-radius: 3px;
+    background-color: #2980b9;
+  }
+
   .shoes {
     position: fixed;
     bottom: 0;
@@ -166,6 +192,7 @@
     transition: all 0.2s ease;
     margin: 0 auto;
     margin-bottom: 20px;
+    user-select: none;
   }
 
  .crowns-container {
@@ -209,7 +236,7 @@
           <tr>
             <th>Rank</th>
             <th colspan="2">Player</th>
-            <th>Score Point</th>
+            <th>Score</th>
           </tr>
         </thead>
         <tbody>
@@ -231,11 +258,11 @@
                 <td class="text-center">{@html osFilter(t.user_agent != undefined ? t.user_agent : '-')}</td>
                 <td>  
                   <div>{t.username}</div>
-                  <small>{cutText(t.user_agent)}</small>
+                  <small class="user-agent">{cutText(t.user_agent)}</small>
                 </td>
                 <td class="text-center">
-                  <div class="bold">{t.score}</div>
-                  <small>{t.time}</small>
+                  <div class="score bold">{t.score}</div>
+                  <small class="time">{t.time}</small>
                 </td>
               </tr>
             {/each}
