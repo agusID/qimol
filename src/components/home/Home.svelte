@@ -7,6 +7,15 @@
   const crowns = ['gold.png', 'silver.png', 'bronze.png']
   let temp = []
   let participants = 0
+  let FirebaseActiveButton = 0
+
+  let takeQuizButtonConf = database.ref('app/take_quiz_button')
+  takeQuizButtonConf.on('value', function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      let childData = childSnapshot.val()
+      FirebaseActiveButton = childData
+    }) 
+  })
 
    // get score data
   let usersRef = database.ref('scoreboard')
@@ -273,13 +282,15 @@
           {/if}
         </tbody>
       </table>
-      <div class="shoes">
-        {#if !$hasKey}
-          <div class="btn-play" on:click={playGame}>Take Quiz</div>
-        {:else}
-          <div class="btn-play disabled" on:click={playGame}>Take Quiz</div>
-        {/if}
-      </div>
+      {#if FirebaseActiveButton}
+        <div class="shoes">
+          {#if !$hasKey}
+            <div class="btn-play" on:click={playGame}>Take Quiz</div>
+          {:else}
+            <div class="btn-play disabled" on:click={playGame}>Take Quiz</div>
+          {/if}
+        </div>
+      {/if}
     {:else}
       <p>Please wait a few seconds...</p>
     {/if}

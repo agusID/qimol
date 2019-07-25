@@ -2,8 +2,18 @@
   import { database } from '@config/firebase.js'
   let token = ''
   let questionJSON = ''
+  let takeQuizButton = 1
   $: message = ''
   $: JSONmessage = ''
+
+  let takeQuizButtonConf = database.ref('app/take_quiz_button')
+  takeQuizButtonConf.on('value', function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      let childData = childSnapshot.val()
+      takeQuizButton = childData
+    }) 
+  })
+
   function reset(){
     var ref = database.ref(`auth/admin`)
     ref.once('value')
@@ -51,6 +61,11 @@
     })
     questionJSON = ''
   }
+
+  function handleQuizButton() {
+    database.ref('app/take_quiz_button').set({ value: takeQuizButton})
+  }
+
 </script>
 <style>
   .container{
@@ -134,6 +149,10 @@
       <button class="btn btn-question" class:disabled={questionJSON.length === 0} on:click={handleQuestion}>Add Question</button>
     </div>
 
+    <label>
+      <input type="checkbox" on:change={handleQuizButton} bind:checked={takeQuizButton}> Take Quiz Button
+    </label>
+    
     <h4>Reset Scoreboard</h4>
     <div class="flex">
       <input class="custom-input" bind:value={token} type="password" placeholder="TOKEN" />
