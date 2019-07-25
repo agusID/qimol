@@ -28,7 +28,8 @@
       $username = prompt('Input your name : ') 
       if ($username) navigateTo('/quiz')
     } else {
-      navigateTo('/quiz')
+      alert('You has been take a quiz before.')
+      // navigateTo('/quiz')
     }
   }
 </script>
@@ -58,8 +59,8 @@
   }
 
   .disabled {
-    background-color: #ecf0f1;
-    color: #34495e;
+    background-color: #ecf0f1 !important;
+    color: #34495e !important;
   }
 
   .helmet-accesories > .helmet-title {
@@ -163,10 +164,7 @@
     background-color: #107eeb;
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
-    /* width: calc(100% - 60px); */
-    /* min-width: 50%; */
     margin: 0 auto;
-    /* display: inline-block; */
     margin-bottom: 10px;
   }
 
