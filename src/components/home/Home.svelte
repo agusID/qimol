@@ -14,7 +14,6 @@
     temp = []
     snapshot.forEach(function(childSnapshot) {
       let childData = childSnapshot.val()
-      console.log('childData : ', childData)
       if(childData.score != undefined)
         temp = [...temp, childData]
     }) 

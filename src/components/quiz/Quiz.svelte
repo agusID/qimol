@@ -7,6 +7,7 @@
   let totalQuestion = '?'
   let usersRef = database.ref('question')
   let answerChecked = [false, false, false, false]
+  let activeSubmit = false
   let uniqueID = $lastKey == null ?  Math.random().toString(36).substring(7) : $lastKey
   lastKey.update(value => value = uniqueID)
 
@@ -78,6 +79,7 @@
     })
     if(exists == false)
       userAnswer.push({questin_no: no, unique_id: id, answer: answer})
+    activeSubmit = true
   }
 
   function writeScore(unique_id, name, score, user_agent, date) {
@@ -376,7 +378,7 @@
       <div class="btn-group">
         <button class="btn btn-prev" class:disabled="{currQuestion === 0}" on:click={btnPrev}>&LeftArrow;</button>
         <button class="btn btn-next" class:not-visible="{currQuestion === totalQuestion - 1}" on:click={btnNext}>Next</button>
-        <button class="btn btn-submit" class:visible="{currQuestion >= totalQuestion - 1}" on:click={btnSubmit}>Submit</button>
+        <button class="btn btn-submit" class:disabled={!activeSubmit} class:visible="{currQuestion >= totalQuestion - 1}" on:click={btnSubmit}>Submit</button>
       </div>
     {:else}
       <div class="loader-container">
