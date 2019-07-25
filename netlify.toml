@@ -1,5 +1,6 @@
 [permalinks]
     post = "/:year/:month/:day/:slug/"
+
 [[redirects]]
-  from = "/old-path"
-  to = "/new-path"
+  from = "/take-quiz"
+  to = "/quiz"
