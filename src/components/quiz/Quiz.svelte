@@ -91,7 +91,7 @@
     activeSubmit = true
   }
 
-  function writeScore(unique_id, name, score, user_agent, date) {
+  function writeScore(unique_id, name, score, user_agent, date, time) {
     hasKey.update(value => value = unique_id)
     database.ref('scoreboard/' + unique_id).set({
       username: name,
@@ -99,6 +99,7 @@
       user_agent: user_agent,
       submit_at: date,
       unique_id: unique_id,
+      time: time,
     }, function(error) {
       if (error)
         console.log(error)
@@ -127,7 +128,8 @@
         score += (MAX_SCORE / totalQuestion)
     })
     stop()
-    writeScore(uniqueID, $username, score, navigator.userAgent, tick)
+    let time = `${min}m ${sec}s`
+    writeScore(uniqueID, $username, score, navigator.userAgent, tick, time)
   }
 
   // timer

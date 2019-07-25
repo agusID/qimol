@@ -31,7 +31,7 @@ function sortForHighScore(a, b) {
   return (a.score < b.score) 
   ? 1 
   : (a.score === b.score) 
-    ? ((a.submit_at < b.submit_at) ? 1 : -1) 
+    ? ((a.submit_at > b.submit_at) ? 1 : -1) 
     : -1
 }
 

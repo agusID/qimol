@@ -230,7 +230,10 @@
                   <div>{t.username}</div>
                   <small>{cutText(t.user_agent)}</small>
                 </td>
-                <td class="text-center bold">{t.score}</td>
+                <td class="text-center">
+                  <div class="bold">{t.score}</div>
+                  <small>{t.time}</small>
+                </td>
               </tr>
             {/each}
           {/if}

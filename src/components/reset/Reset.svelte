@@ -8,8 +8,9 @@
         .then(function(snapshot) {
             let checkToken = token == snapshot.child('token').val()
             if(checkToken){
-                database.ref('users').remove()
+                database.ref('scoreboard').remove()
                 message = 'Data has been deleted'
+                token = ''
             }
             else{
                 token = ''
@@ -57,7 +58,7 @@
     }
 </style>
 <div class="container">
-    <h4>Delete user data</h4>
+    <h4>Reset Scoreboard</h4>
     <div class="flex">
         <input class="custom-input" bind:value={token} type="password" placeholder="TOKEN" />
         <button class="btn-reset" on:click={reset}>RESET</button>
