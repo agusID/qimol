@@ -276,6 +276,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    user-select: none;
   }
 
   .question-indicator strong{
@@ -296,6 +297,7 @@
     font-weight: bold;
     font-size: 18px;
     min-height: 20vh;
+    user-select: none;
   }
 
   .answer-list {
@@ -334,6 +336,7 @@
     margin: 10px;
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
+    user-select: none;
   }
 
   .btn-next, .btn-submit {
@@ -356,6 +359,7 @@
 
   .answer-label {
     display: block;
+    user-select: none;
   }
   
   .not-visible {
