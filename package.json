@@ -1,8 +1,8 @@
 {
-  "name": "bandungjs-pwa",
+  "name": "townhall",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "adiatma <adiatma.kamaarudin@ralali.com>",
+  "author": "agusdwi <dwi.agustianto@ralali.com>",
   "license": "MIT",
   "devDependencies": {
     "copy-webpack-plugin": "5.0.3",
@@ -26,5 +26,20 @@
     "firebase": "^6.2.4",
     "svelte": "^3.6.5",
     "svero": "^0.5.0"
-  }
+  },
+  "description": "townhall quiz",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agusID/qimol.git"
+  },
+  "keywords": [
+    "quizapp"
+  ],
+  "bugs": {
+    "url": "https://github.com/agusID/qimol/issues"
+  },
+  "homepage": "https://github.com/agusID/qimol#readme"
 }
