@@ -12,12 +12,12 @@
   lastKey.update(value => value = uniqueID)
 
   // check username is exists
-  if($username == null){
-    $username = prompt('Input your name : ')
-    while($username == null || $username.length == 0){
-      $username = prompt('Input your name : ')
-    }
-  }
+  // if($username == null){
+  //   $username = prompt('Input your name : ')
+  //   while($username == null || $username.length == 0){
+  //     $username = prompt('Input your name : ')
+  //   }
+  // }
 
   const MAX_SCORE = 100
 
@@ -28,6 +28,7 @@
       temp = [...temp, childData]
     }) 
     totalQuestion = temp.length
+    startStop()
   })
   
   let currQuestion = 0
@@ -120,6 +121,84 @@
     writeScore(uniqueID, $username, score, navigator.userAgent, getDate())
   }
 
+  // timer
+  let x
+  let startstop = 0
+
+  function startStop() { /* Toggle StartStop */
+
+    startstop = startstop + 1
+
+    if (startstop === 1) {
+      start()
+    } else if (startstop === 2) {
+      startstop = 0
+      stop()
+    }
+  }
+
+
+  function start() {
+    x = setInterval(timer, 10)
+  } /* Start */
+
+  function stop() {
+    clearInterval(x);
+  } /* Stop */
+
+  var milisec = 0;
+  var sec = 0; /* holds incrementing value */
+  var min = 0;
+
+  /* Contains and outputs returned value of  function checkTime */
+
+  var miliSecOut = 0;
+  var secOut = 0;
+  var minOut = 0;
+
+  function timer() {
+    /* Main Timer */
+    miliSecOut = checkTime(milisec);
+    secOut = checkTime(sec);
+    minOut = checkTime(min);
+
+    milisec = ++milisec;
+
+    if (milisec === 100) {
+      milisec = 0;
+      sec = ++sec;
+    }
+
+    if (sec == 60) {
+      min = ++min;
+      sec = 0;
+    }
+
+    document.getElementById("milisec").innerHTML = miliSecOut
+    document.getElementById("sec").innerHTML = secOut
+    document.getElementById("min").innerHTML = minOut
+
+  }
+  function checkTime(i) {
+    if (i < 10) 
+      i = "0" + i
+    return i
+  }
+
+  // function reset() {
+
+
+  //   milisec = 0
+  //   sec = 0
+  //   min = 0
+  //   hour = 0
+
+  //   document.getElementById("milisec").innerHTML = "00"
+  //   document.getElementById("sec").innerHTML = "00"
+  //   document.getElementById("min").innerHTML = "00"
+  //   document.getElementById("hour").innerHTML = "00"
+
+  // }
 </script>
 <style>
   .loader-container {
@@ -205,10 +284,21 @@
     margin: 20px 40px;
     color: #bdc3c7;
     font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .question-indicator strong{
     font-size: 20px;
+  }
+  .question-indicator-timer {
+    border-radius: 20px;
+    font-size: 18px;
+    padding: 5px 10px;
+    border: 2px solid #384060;
+    background-color: white;
+    color: #384060;
   }
 
   .question {
@@ -355,7 +445,20 @@
 <div class="container">
   <div class="panel">
     {#if temp.length > 0}
-      <div class="question-indicator"><strong>Question {currQuestion + 1}</strong>/{totalQuestion}</div>
+      <div class="question-indicator">
+        <div class="question-indicator-label">
+          <strong>Question {currQuestion + 1}</strong>/{totalQuestion}
+        </div>
+        <div class="question-indicator-timer">
+          <div class="timer">
+            <div>
+              <span id="min">00</span> :
+              <span id="sec">00</span> :
+              <span id="milisec">00</span>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="question">{temp[currQuestion].question}</div>
       <div class="answer-list">
         <div class="answer-item">
