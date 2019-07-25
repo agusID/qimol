@@ -165,7 +165,7 @@
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
     margin: 0 auto;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 
  .crowns-container {
