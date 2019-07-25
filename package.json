@@ -31,10 +31,7 @@
   "directories": {
     "doc": "docs"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/agusID/qimol.git"
-  },
+  "repository": "git+https://github.com/agusID/qimol.git",
   "keywords": [
     "quizapp"
   ],
