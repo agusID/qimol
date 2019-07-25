@@ -11,13 +11,21 @@
   let uniqueID = $lastKey == null ?  Math.random().toString(36).substring(7) : $lastKey
   lastKey.update(value => value = uniqueID)
 
+  let milisec = 0
+  let sec = 0;
+  let min = 0
+  let miliSecOut = 0
+  let secOut = 0
+  let minOut = 0
+  let tick = 0
+
   // check username is exists
-  // if($username == null){
-  //   $username = prompt('Input your name : ')
-  //   while($username == null || $username.length == 0){
-  //     $username = prompt('Input your name : ')
-  //   }
-  // }
+  if($username == null){
+    $username = prompt('Input your name : ')
+    while($username == null || $username.length == 0){
+      $username = prompt('Input your name : ')
+    }
+  }
 
   const MAX_SCORE = 100
 
@@ -118,7 +126,8 @@
       if(value.correct_answer === userAnswer[index].answer)
         score += (MAX_SCORE / totalQuestion)
     })
-    writeScore(uniqueID, $username, score, navigator.userAgent, getDate())
+    stop()
+    writeScore(uniqueID, $username, score, navigator.userAgent, tick)
   }
 
   // timer
@@ -140,24 +149,14 @@
 
   function start() {
     x = setInterval(timer, 10)
-  } /* Start */
+  }
 
   function stop() {
     clearInterval(x);
-  } /* Stop */
-
-  var milisec = 0;
-  var sec = 0; /* holds incrementing value */
-  var min = 0;
-
-  /* Contains and outputs returned value of  function checkTime */
-
-  var miliSecOut = 0;
-  var secOut = 0;
-  var minOut = 0;
+  }
 
   function timer() {
-    /* Main Timer */
+    tick++
     miliSecOut = checkTime(milisec);
     secOut = checkTime(sec);
     minOut = checkTime(min);
@@ -179,9 +178,10 @@
     document.getElementById("min").innerHTML = minOut
 
   }
+
   function checkTime(i) {
     if (i < 10) 
-      i = "0" + i
+      i = `0${i}`
     return i
   }
 
@@ -292,6 +292,7 @@
   .question-indicator strong{
     font-size: 20px;
   }
+
   .question-indicator-timer {
     border-radius: 20px;
     font-size: 18px;

@@ -74,6 +74,7 @@
 
   .armour {
     overflow-x: scroll;
+    margin-bottom: 25px;
   }
 
   .table {
@@ -81,6 +82,7 @@
     background: #0b2d53;
     color: white;
     border-collapse: collapse;
+    margin-bottom: 20px;
   }
 
   .table tbody {
@@ -135,13 +137,32 @@
     font-weight: bold;
   }
 
+  .shoes {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
   .btn-play {
     outline: none;
     color: white;
     text-decoration: none;
-    border: 1px solid white;
-    border-radius: 5px;
-    padding: 8px 10px;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    text-align: center;
+    font-size: 20px;
+    background-color: #107eeb;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    /* width: calc(100% - 60px); */
+    /* min-width: 50%; */
+    margin: 0 auto;
+    /* display: inline-block; */
+    margin-bottom: 10px;
   }
 
  .crowns-container {
@@ -173,11 +194,6 @@
 
 <div class="container">
   <div class="helmet">
-    {#if !$hasKey}
-      <div class="btn-play" on:click={playGame}>Take Quiz</div>
-    {:else}
-      <div class="btn-play" on:click={playGame}>Take Quiz Again</div>
-    {/if}
     <div class="helmet-accesories">
       <label class="helmet-title">Townhall Quiz</label>
       <div class="accessories"><strong>{participants}</strong> participant(s)</div>
@@ -220,6 +236,13 @@
           {/if}
         </tbody>
       </table>
+      <div class="shoes">
+        {#if !$hasKey}
+          <div class="btn-play" on:click={playGame}>Take Quiz</div>
+        {:else}
+          <div class="btn-play" on:click={playGame}>Take Quiz Again</div>
+        {/if}
+      </div>
     {:else}
       <p>Please wait a few seconds...</p>
     {/if}
