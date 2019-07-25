@@ -26,7 +26,7 @@
     database.ref('question/' + uniqueID).set({
       answer_1: answer_1,
       answer_2: answer_2,
-      answer_3: answer_2,
+      answer_3: answer_3,
       answer_4: answer_4,
       correct_answer: correct_answer,
       question: question,
