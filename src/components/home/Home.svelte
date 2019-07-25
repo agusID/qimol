@@ -45,6 +45,7 @@
   function playGame() {
     if (!$hasKey) {
       $username = prompt('Input your name : ') 
+      $username = $username.trim()
       if ($username) navigateTo('/quiz')
     } else {
       alert('You has been take a quiz before.')
