@@ -3,6 +3,7 @@
   let token = ''
   let questionJSON = ''
   $: message = ''
+  $: JSONmessage = ''
   function reset(){
     var ref = database.ref(`auth/admin`)
     ref.once('value')
@@ -35,6 +36,7 @@
       if (error)
         console.log(error)
       else {
+        JSONmessage = 'Question data has been renewed'
         console.log('question data has been saved')
       }
     })
@@ -47,6 +49,7 @@
     tempData.question.forEach(function(value, index) {
       addQuestion(value.answer_1, value.answer_2, value.answer_3, value.answer_4, value.correct_answer, value.question)
     })
+    questionJSON = ''
   }
 </script>
 <style>
@@ -127,6 +130,7 @@
     <h4>Input New Question</h4>
     <div class="question-panel">
       <textarea bind:value={questionJSON} placeholder="input raw json" cols="10"></textarea>
+      <p class="message">{JSONmessage}</p>
       <button class="btn btn-question" class:disabled={questionJSON.length === 0} on:click={handleQuestion}>Add Question</button>
     </div>
 
