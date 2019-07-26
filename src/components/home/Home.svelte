@@ -250,6 +250,7 @@
   <div class="helmet">
     <div class="helmet-accesories">
       <label class="helmet-title">Townhall Quiz</label>
+      <label class="helmet-title">bit.ly/ralali-quiz</label>
       <div class="accessories"><strong>{participants}</strong> participant(s)</div>
     </div>
   </div>
