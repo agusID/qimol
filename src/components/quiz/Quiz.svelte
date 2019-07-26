@@ -302,6 +302,7 @@
 
   .answer-list {
     margin: 20px;
+    margin-bottom: 100px;
   }
 
   .answer-item {
