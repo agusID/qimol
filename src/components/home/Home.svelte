@@ -227,7 +227,7 @@
   }
 
   .crowns {
-    width: 20px;
+    width: 25px;
   }
 
   @media only screen and (max-width: 360px) {
