@@ -323,8 +323,8 @@
     justify-content: center;
     position: fixed;
     bottom: 0;
-    background-color: transparent;
     padding: 10px;
+    background-image: linear-gradient(rgb(37, 44, 74, 0.9), #252c4a);
   }
 
   .btn {
