@@ -3,9 +3,13 @@
   import { username, hasKey } from '@stores';
   import { database } from '@config/firebase'
   import { osFilter, getImageSource, cutText, sorted } from './utils'
-  
+  import Modal from './Modal.svelte'
+
+  let showModal = false
+
   const crowns = ['gold.png', 'silver.png', 'bronze.png']
   let temp = []
+  let tempName = ''
   let participants = 0
   let FirebaseActiveButton = true
   let FirebaseFreezeScoreboard = 0
@@ -42,13 +46,11 @@
 
   function playGame() {
     if (!$hasKey) {
-      $username = prompt('Input your name : ') 
+      $username = tempName.trim()
       $username = $username.trim()
       if ($username) navigateTo('/quiz')
-    } else {
+    } else 
       alert('You has been take a quiz before.')
-      // navigateTo('/quiz')
-    }
   }
 </script>
 
@@ -196,6 +198,21 @@
     align-items: center;
   }
 
+  .input {
+    outline: none;
+    border: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease-out;
+    padding: 8px 1px;
+    display: block;
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .input:focus {
+    border-bottom: 1px solid #107eeb;
+  }
+
   .btn-play {
     outline: none;
     color: white;
@@ -213,7 +230,33 @@
     user-select: none;
   }
 
- .crowns-container {
+  .modal-slot-title {
+    font-size: 14px;
+    font-weight: normal;
+    color: black;
+  }
+
+  .btn-play-modal {
+    outline: none;
+    display: inline-block;
+    font-weight: 400;
+    color: white;
+    padding: 5px 8px;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    line-height: 1.5;
+    border-radius: .25rem;
+    background-color: #107eeb;
+    border: none;
+    font-size: 12px;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+
+  .crowns-container {
     display:flex; 
     align-items: center; 
     justify-content: center;
@@ -295,9 +338,20 @@
     {#if FirebaseActiveButton}
       <div class="shoes">
         {#if !$hasKey}
-          <div class="btn-play" on:click={playGame}>Join Quiz</div>
+          <div class="btn-play" on:click="{() => showModal = true}">Join Quiz</div>
         {/if}
       </div>
+      {#if showModal}
+        <Modal on:close="{() => showModal = false}">
+          <div class="modal-slot-title" slot="header">
+            Input Name
+          </div>
+          <div class="definition-list">
+            <input class="input" bind:value={tempName} type="text">
+          </div>
+          <button class="btn-play-modal" slot="play-button" on:click={playGame}>Join</button>
+        </Modal>
+      {/if}
     {/if}
   </div>
 </div>
