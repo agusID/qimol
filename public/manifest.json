@@ -3,7 +3,7 @@
   "short_name": "Towhhall Quiz App",
   "theme_color": "#252c4a",
   "background_color": "#fff",
-  "display": "standalone",
+  "display": "fullscreen",
   "orientation": "portrait",
   "Scope": "/",
   "start_url": "/",
