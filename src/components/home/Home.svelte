@@ -37,7 +37,7 @@
     temp = []
     snapshot.forEach(function(childSnapshot) {
       let childData = childSnapshot.val()
-      if(childData.score != undefined)
+      if(childData.score != undefined && childData.time !== '-')
         temp = [...temp, childData]
     })
     temp = sorted(temp)
