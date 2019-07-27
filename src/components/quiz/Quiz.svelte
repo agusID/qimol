@@ -296,7 +296,7 @@
     margin: 20px 40px;
     font-weight: bold;
     font-size: 18px;
-    min-height: 20vh;
+    min-height: 12vh;
     user-select: none;
     line-height: 1.5;
   }
