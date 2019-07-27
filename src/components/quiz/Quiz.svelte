@@ -524,12 +524,15 @@
   }
 
   .user-name {
-    border: 1px solid white;
+    border: 1px solid rgba(16, 124, 233, 0.2);
     background-color: #0e3964;
-    padding: 5px 8px;
+    padding: 5px 10px;
     font-size: 12px;
-    margin: 5px;
+    margin: 8px 5px;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    background: rgba(16, 124, 233, 0.2);
   }
 
   .user-active {
