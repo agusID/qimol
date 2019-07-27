@@ -61,7 +61,7 @@
   }
   
   .container {
-    background: #0b2d53;
+    background: #252c4a;
     min-height: 100vh;
     font-family: 'Roboto';
     color: white;
@@ -83,6 +83,7 @@
     background-color: #ecf0f1 !important;
     color: #34495e !important;
   }
+
   .helmet-accesories {
     width: 100%;
     display: flex;
@@ -114,7 +115,7 @@
 
   .table {
     width: 100%;
-    background: #0b2d53;
+    background: #252c4a;
     color: white;
     border-collapse: collapse;
     margin-bottom: 20px;
@@ -139,7 +140,7 @@
 
   .table tr {
     margin: 3px 0;
-    border-bottom: 3px solid #0b2d53;
+    border-bottom: 3px solid #252c4a;
   }
 
   .table tr.active {
@@ -160,7 +161,7 @@
 
   .table td:first-child {
     text-align: center;
-    border-right: 3px solid #0b2d53;
+    border-right: 3px solid #252c4a;
   }
 
   .table td small {
