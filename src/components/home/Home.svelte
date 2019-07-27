@@ -7,7 +7,7 @@
   const crowns = ['gold.png', 'silver.png', 'bronze.png']
   let temp = []
   let participants = 0
-  let FirebaseActiveButton = 0
+  let FirebaseActiveButton = true
   let FirebaseFreezeScoreboard = 0
 
   let takeQuizButtonConf = database.ref('app/take_quiz_button')
@@ -35,9 +35,7 @@
       let childData = childSnapshot.val()
       if(childData.score != undefined)
         temp = [...temp, childData]
-    }) 
-
-    // sorting high_score (priority : high_score, current_score)
+    })
     temp = sorted(temp)
     participants = temp.length
   })
@@ -77,11 +75,6 @@
     padding: 10px 0;
     text-decoration: none;
     user-select: none;
-  }
-
-  .disabled {
-    background-color: #ecf0f1 !important;
-    color: #34495e !important;
   }
 
   .helmet-accesories {
@@ -302,9 +295,7 @@
     {#if FirebaseActiveButton}
       <div class="shoes">
         {#if !$hasKey}
-          <div class="btn-play" on:click={playGame}>Take Quiz</div>
-        {:else}
-          <div class="btn-play disabled" on:click={playGame}>Take Quiz</div>
+          <div class="btn-play" on:click={playGame}>Join Quiz</div>
         {/if}
       </div>
     {/if}

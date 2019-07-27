@@ -4,15 +4,31 @@
   import { database } from '@config/firebase'
 
   let temp = []
+  let tempUsers = []
   let totalQuestion = '?'
   let usersRef = database.ref('question')
   let answerChecked = [false, false, false, false]
+  let startGame = 0
+  let participants = '?'
+  let startGameConf = database.ref('app/start_game')
+
+  startGameConf.on('value', function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      let childData = childSnapshot.val()
+      startGame = childData
+    }) 
+    startGame ? start() : stop()
+  })
+
   let activeSubmit = false
   let uniqueID = $lastKey == null ?  Math.random().toString(36).substring(7) : $lastKey
   lastKey.update(value => value = uniqueID)
 
+  if ($username !== null) 
+    writeScore(uniqueID, $username, 0, navigator.userAgent, '-', '-')
+
   let milisec = 0
-  let sec = 0;
+  let sec = 0
   let min = 0
   let miliSecOut = 0
   let secOut = 0
@@ -22,15 +38,6 @@
   // timer
   let x
   let startstop = 0
-
-  // check username is exists
-  // if($username == null){
-  //   $username = prompt('Input your name : ')
-  //   while($username == null || $username.length == 0){
-  //     $username = prompt('Input your name : ')
-  //   }
-  // }
-
   const MAX_SCORE = 100
 
   usersRef.on('value', function(snapshot) {
@@ -40,9 +47,19 @@
       temp = [...temp, childData]
     }) 
     totalQuestion = temp.length
-    startStop()
   })
   
+  let usersConfig = database.ref('scoreboard')
+  usersConfig.on('value', function(snapshot) {
+    tempUsers = []
+    snapshot.forEach(function(childSnapshot) {
+      let childData = childSnapshot.val()
+      if(childData.score != undefined)
+        tempUsers = [...tempUsers, childData]
+    })
+    participants = tempUsers.length
+  })
+
   let currQuestion = 0
   let userAnswer = []
 
@@ -109,10 +126,8 @@
       if (error)
         console.log(error)
       else {
-        navigateTo('/')
         console.log('data has been saved')
       }
-        
     })
   }
 
@@ -135,27 +150,29 @@
     stop()
     let time = `${min}m ${sec}s`
     writeScore(uniqueID, $username, score, navigator.userAgent, tick, time)
+    navigateTo('/')
   }
 
-  function startStop() { /* Toggle StartStop */
-
-    startstop = startstop + 1
-
-    if (startstop === 1) {
-      start()
-    } else if (startstop === 2) {
-      startstop = 0
-      stop()
-    }
-  }
-
-
+  let hideSplashScreen = false
   function start() {
-    x = setInterval(timer, 10)
+    let timeleft = 4
+    let downloadTimer = setInterval(function(){
+      document.getElementById('countdown').innerHTML = timeleft - 1
+      timeleft -= 1
+      if(timeleft == 0){
+        document.getElementById('countdown').innerHTML = 'Start!'
+      } else if(timeleft < 0) {
+        clearInterval(downloadTimer)
+        hideSplashScreen = true
+        x = setInterval(timer, 10)
+      }
+    }, 1000);
+    
   }
 
   function stop() {
-    clearInterval(x);
+    clearInterval(x)
+    min = milisec = sec = 0
   }
 
   function timer() {
@@ -176,16 +193,13 @@
       sec = 0;
     }
 
-    document.getElementById("milisec").innerHTML = miliSecOut
-    document.getElementById("sec").innerHTML = secOut
-    document.getElementById("min").innerHTML = minOut
-
+    document.getElementById('milisec').innerHTML = miliSecOut
+    document.getElementById('sec').innerHTML = secOut
+    document.getElementById('min').innerHTML = minOut
   }
 
   function checkTime(i) {
-    if (i < 10) 
-      i = `0${i}`
-    return i
+    return (i < 10) ? `0${i}` : i
   }
 
 </script>
@@ -315,6 +329,10 @@
   .disabled {
     pointer-events: none;
     opacity: 0.4;
+  }
+
+  .hide {
+    display: none !important;
   }
 
   .btn-group {
@@ -463,69 +481,135 @@
     -webkit-transform: scale(1);
     transform: scale(1);
   }
+
+  .countdown-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: #252c4a;
+    color: white;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+  }
+
+  .countdown-wrapper .countdown {
+    font-size: 40px;
+    color: white;
+  }
+
+  .user-list {
+    display: flex;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    height: calc(100vh - 65px);
+    margin: 0 -5px;
+    user-select: none;
+  }
+
+  .lobby {
+    padding: 15px;
+  }
+
+  .lobby-title {
+    width: 100%;
+    margin-bottom: 15px;
+    user-select: none;
+  }
+
+  .user-name {
+    border: 1px solid white;
+    background-color: #0e3964;
+    padding: 5px 8px;
+    font-size: 12px;
+    margin: 5px;
+    border-radius: 5px;
+  }
+
+  .user-active {
+    background: #107eeb;
+    border: 2px solid #107eeb;
+  }
 </style>
 <div class="container">
-  <div class="panel">
-    {#if temp.length > 0}
-      <div class="question-indicator">
-        <div class="question-indicator-label">
-          <strong>Question {currQuestion + 1}</strong>/{totalQuestion}
-        </div>
-        <div class="question-indicator-timer">
-          <div class="timer">
-            <div>
-              <span id="min">00</span> :
-              <span id="sec">00</span> :
-              <span id="milisec">00</span>
+  {#if startGame}
+    <div class="countdown-wrapper" class:hide={hideSplashScreen}>
+      <div class="countdown" id="countdown"></div>
+    </div>
+    <div class="panel">
+      {#if temp.length > 0}
+        <div class="question-indicator">
+          <div class="question-indicator-label">
+            <strong>Question {currQuestion + 1}</strong>/{totalQuestion}
+          </div>
+          <div class="question-indicator-timer">
+            <div class="timer">
+              <div>
+                <span id="min">00</span> :
+                <span id="sec">00</span> :
+                <span id="milisec">00</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="question">{temp[currQuestion].question}</div>
-      <div class="answer-list">
-        <div class="answer-item">
-          <input id="A" type="radio" checked={answerChecked[0]} on:click={() => doAnswer(currQuestion, temp[currQuestion].unique_id, 1)} name="q-{currQuestion}-answer" />
-          <label class="answer-label" for="A">{temp[currQuestion].answer_1}
-            <svg viewBox="0 0 24 24">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-          </label>
+        <div class="question">{temp[currQuestion].question}</div>
+        <div class="answer-list">
+          <div class="answer-item">
+            <input id="A" type="radio" checked={answerChecked[0]} on:click={() => doAnswer(currQuestion, temp[currQuestion].unique_id, 1)} name="q-{currQuestion}-answer" />
+            <label class="answer-label" for="A">{temp[currQuestion].answer_1}
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </label>
+          </div>
+          <div class="answer-item">
+            <input id="B" type="radio" checked={answerChecked[1]} on:click={() => doAnswer(currQuestion, temp[currQuestion].unique_id, 2)} name="q-{currQuestion}-answer" />
+            <label class="answer-label" for="B">{temp[currQuestion].answer_2}
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </label>
+          </div>
+          <div class="answer-item">
+            <input id="C" type="radio" checked={answerChecked[2]} on:click={() => doAnswer(currQuestion, temp[currQuestion].unique_id, 3)} name="q-{currQuestion}-answer" />
+            <label class="answer-label" for="C">{temp[currQuestion].answer_3}
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </label>
+          </div>
+          <div class="answer-item">
+            <input id="D" type="radio" checked={answerChecked[3]} on:click={() => doAnswer(currQuestion, temp[currQuestion].unique_id, 4)} name="q-{currQuestion}-answer" />
+            <label class="answer-label" for="D">{temp[currQuestion].answer_4}
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </label>
+          </div>
         </div>
-        <div class="answer-item">
-          <input id="B" type="radio" checked={answerChecked[1]} on:click={() => doAnswer(currQuestion, temp[currQuestion].unique_id, 2)} name="q-{currQuestion}-answer" />
-          <label class="answer-label" for="B">{temp[currQuestion].answer_2}
-            <svg viewBox="0 0 24 24">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-          </label>
+        <div class="btn-group">
+          <button class="btn btn-prev" class:disabled="{currQuestion === 0}" on:click={btnPrev}>&LeftArrow;</button>
+          <button class="btn btn-next" class:not-visible="{currQuestion === totalQuestion - 1}" on:click={btnNext}>Next</button>
+          <button class="btn btn-submit" class:disabled={!activeSubmit} class:visible="{currQuestion >= totalQuestion - 1}" on:click={btnSubmit}>Submit</button>
         </div>
-        <div class="answer-item">
-          <input id="C" type="radio" checked={answerChecked[2]} on:click={() => doAnswer(currQuestion, temp[currQuestion].unique_id, 3)} name="q-{currQuestion}-answer" />
-          <label class="answer-label" for="C">{temp[currQuestion].answer_3}
-            <svg viewBox="0 0 24 24">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-          </label>
+      {:else}
+        <div class="loader-container">
+          <div class="loader"></div>
+          <div class="loader-label">Getting the Questions</div>
         </div>
-        <div class="answer-item">
-          <input id="D" type="radio" checked={answerChecked[3]} on:click={() => doAnswer(currQuestion, temp[currQuestion].unique_id, 4)} name="q-{currQuestion}-answer" />
-          <label class="answer-label" for="D">{temp[currQuestion].answer_4}
-            <svg viewBox="0 0 24 24">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-          </label>
-        </div>
+      {/if}
+    </div>
+  {:else}
+    <div class="lobby">
+      <div class="lobby-title"><strong>{participants}</strong> has joined the quiz</div>
+      <div class="user-list">
+        {#each tempUsers as t, idx}
+          <div class="user-name" class:user-active={t.unique_id === $hasKey}>{t.username}</div>
+        {/each }
       </div>
-      <div class="btn-group">
-        <button class="btn btn-prev" class:disabled="{currQuestion === 0}" on:click={btnPrev}>&LeftArrow;</button>
-        <button class="btn btn-next" class:not-visible="{currQuestion === totalQuestion - 1}" on:click={btnNext}>Next</button>
-        <button class="btn btn-submit" class:disabled={!activeSubmit} class:visible="{currQuestion >= totalQuestion - 1}" on:click={btnSubmit}>Submit</button>
-      </div>
-    {:else}
-      <div class="loader-container">
-        <div class="loader"></div>
-        <div class="loader-label">Getting the Questions</div>
-      </div>
-    {/if}
-  </div>
+
+    </div>
+  {/if}
 </div>
