@@ -52,6 +52,10 @@
     } else 
       alert('You has been take a quiz before.')
   }
+
+  function handleModal() {
+    showModal = true
+  }
 </script>
 
 <style>
@@ -77,6 +81,11 @@
     padding: 10px 0;
     text-decoration: none;
     user-select: none;
+  }
+
+  .disabled {
+    opacity: 0.5;
+    pointer-events: none;
   }
 
   .helmet-accesories {
@@ -338,7 +347,7 @@
     {#if FirebaseActiveButton}
       <div class="shoes">
         {#if !$hasKey}
-          <div class="btn-play" on:click="{() => showModal = true}">Join Quiz</div>
+          <div class="btn-play" on:click="{() => handleModal()}">Join Quiz</div>
         {/if}
       </div>
       {#if showModal}
@@ -347,9 +356,9 @@
             Input Name
           </div>
           <div class="definition-list">
-            <input class="input" bind:value={tempName} type="text">
+            <input class="input" id="inputName" autocomplete="off" maxlength="50" bind:value={tempName} type="text">
           </div>
-          <button class="btn-play-modal" slot="play-button" on:click={playGame}>Join</button>
+          <button class="btn-play-modal" slot="play-button" class:disabled={tempName.length === 0} on:click={playGame}>Join</button>
         </Modal>
       {/if}
     {/if}
