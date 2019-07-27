@@ -2,6 +2,7 @@
   import { username, hasKey, lastKey } from '@stores';
   import { navigateTo } from 'svero'
   import { database } from '@config/firebase'
+  import { fade, fly } from 'svelte/transition'
 
   let temp = []
   let tempUsers = []
@@ -46,14 +47,16 @@
   if ($username !== null) 
     writeScore(uniqueID, $username, 0, navigator.userAgent, '-', '-')
 
-  usersRef.on('value', function(snapshot) {
-    temp = []
-    snapshot.forEach(function(childSnapshot) {
-      let childData = childSnapshot.val()
-      temp = [...temp, childData]
-    }) 
-    totalQuestion = temp.length
-  })
+  function loadQuestion() {
+    usersRef.on('value', function(snapshot) {
+      temp = []
+      snapshot.forEach(function(childSnapshot) {
+        let childData = childSnapshot.val()
+        temp = [...temp, childData]
+      }) 
+      totalQuestion = temp.length
+    })
+  }
   
   let usersConfig = database.ref('scoreboard')
   usersConfig.on('value', function(snapshot) {
@@ -169,6 +172,7 @@
       } else if(timeleft < 0) {
         clearInterval(downloadTimer)
         hideSplashScreen = true
+        loadQuestion()
         x = setInterval(timer, 10)
       }
     }, 1000);
@@ -196,10 +200,6 @@
       min = ++min;
       sec = 0;
     }
-
-    document.getElementById('milisec').innerHTML = miliSecOut
-    document.getElementById('sec').innerHTML = secOut
-    document.getElementById('min').innerHTML = minOut
   }
 
   function checkTime(i) {
@@ -500,7 +500,7 @@
   }
 
   .countdown-wrapper .countdown {
-    font-size: 40px;
+    font-size: 60px;
     color: white;
   }
 
@@ -542,7 +542,7 @@
 </style>
 <div class="container">
   {#if startGame}
-    <div class="countdown-wrapper" class:hide={hideSplashScreen}>
+    <div class="countdown-wrapper" class:hide={hideSplashScreen} out:fade="{{ duration: 500}}">
       <div class="countdown" id="countdown"></div>
     </div>
     <div class="panel">
@@ -554,9 +554,9 @@
           <div class="question-indicator-timer">
             <div class="timer">
               <div>
-                <span id="min">00</span> :
-                <span id="sec">00</span> :
-                <span id="milisec">00</span>
+                <span id="min">{min < 10 ? `0${min}` : min}</span> :
+                <span id="sec">{sec < 10 ? `0${sec}` : sec}</span> :
+                <span id="milisec">{miliSecOut}</span>
               </div>
             </div>
           </div>
@@ -602,7 +602,7 @@
           <button class="btn btn-submit" class:disabled={!activeSubmit} class:visible="{currQuestion >= totalQuestion - 1}" on:click={btnSubmit}>Submit</button>
         </div>
       {:else}
-        <div class="loader-container">
+        <div class="loader-container" out:fade="{{ duration: 500}}">
           <div class="loader"></div>
           <div class="loader-label">Getting the Questions</div>
         </div>
@@ -613,7 +613,7 @@
       <div class="lobby-title"><strong>{participants}</strong> has joined the quiz</div>
       <div class="user-list">
         {#each tempUsers as t, idx}
-          <div class="user-name" class:user-active={t.unique_id === $hasKey}>{t.username}</div>
+          <div class="user-name" transition:fade="{{ duration: 500 }}" class:user-active={t.unique_id === $hasKey}>{t.username}</div>
         {/each }
       </div>
 
