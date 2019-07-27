@@ -3,6 +3,7 @@
   import { navigateTo } from 'svero'
   import { database } from '@config/firebase'
   import { fade, fly } from 'svelte/transition'
+  import { sorted } from './utils'
 
   let temp = []
   let tempUsers = []
@@ -45,7 +46,7 @@
   lastKey.update(value => value = uniqueID)
 
   if ($username !== null) 
-    writeScore(uniqueID, $username, 0, navigator.userAgent, '-', '-')
+    writeScore(uniqueID, $username, 0, navigator.userAgent, '-', '-', new Date().getTime())
 
   function loadQuestion() {
     usersRef.on('value', function(snapshot) {
@@ -66,6 +67,7 @@
       if(childData.score != undefined)
         tempUsers = [...tempUsers, childData]
     })
+    tempUsers = sorted(tempUsers)
     participants = tempUsers.length
   })
 
@@ -122,15 +124,16 @@
       activeSubmit = true
   }
 
-  function writeScore(unique_id, name, score, user_agent, date, time) {
+  function writeScore(unique_id, name, score, user_agent, tick, time, date) {
     hasKey.update(value => value = unique_id)
     database.ref('scoreboard/' + unique_id).set({
       username: name,
       score: score,
       user_agent: user_agent,
-      submit_at: date,
+      submit_at: tick,
       unique_id: unique_id,
       time: time,
+      date: date,
     }, function(error) {
       if (error)
         console.log(error)
@@ -158,7 +161,7 @@
     })
     stop()
     let time = `${min}m ${sec}s`
-    writeScore(uniqueID, $username, score, navigator.userAgent, tick, time)
+    writeScore(uniqueID, $username, score, navigator.userAgent, tick, time, new Date().getTime())
     navigateTo('/')
   }
 
