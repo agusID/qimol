@@ -216,6 +216,7 @@
     display: block;
     width: 100%;
     font-size: 14px;
+    caret-color: #107eeb;
   }
 
   .input:focus {
@@ -246,23 +247,18 @@
   }
 
   .btn-play-modal {
-    outline: none;
-    display: inline-block;
-    font-weight: 400;
-    color: white;
-    padding: 5px 8px;
-    text-align: center;
-    vertical-align: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
-    line-height: 1.5;
-    border-radius: .25rem;
+    outline: none;
+    color: white;
     background-color: #107eeb;
-    border: none;
+    display: inline-block;
     font-size: 12px;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    padding: 7px 15px;
+    box-shadow: 0 2px 4px 0 rgba(14,30,37,.12);
+    border: 1px solid #e9ebeb;
+    border-bottom: 1px solid #e1e2e4;
+    border-radius: 4px;
+    transition: .2s ease;
   }
 
   .crowns-container {

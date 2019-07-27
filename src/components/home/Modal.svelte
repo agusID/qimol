@@ -36,7 +36,7 @@
     pointer-events: auto;
     background-color: #fff;
     background-clip: padding-box;
-    border-radius: .3rem;
+    border-radius: 8px;
     outline: 0;
   }
 
@@ -60,20 +60,26 @@
   .modal-footer {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
     padding: 0.5rem;
     border-bottom-right-radius: .3rem;
     border-bottom-left-radius: .3rem;
   }
 
   .btn-close {
+    user-select: none;
     outline: none;
-    color: black;
+    color: rgba(14,30,37,.87);
     background-color: transparent;
-    border: none;
-    margin-right: .25rem;
+    margin-left: .25rem;
     display: inline-block;
+    padding: 7px 15px;
     font-size: 12px;
+    box-shadow: 0 2px 4px 0 rgba(14,30,37,.12);
+    border: 1px solid #e9ebeb;
+    border-bottom: 1px solid #e1e2e4;
+    border-radius: 4px;
+    transition: .2s ease;
   }
 
 </style>
@@ -89,8 +95,8 @@
       <slot></slot>
     </div>
     <div class="modal-footer">
-      <button class="btn-close" on:click='{() => dispatch("close")}'>Cancel</button>
       <slot name='play-button'></slot>
+      <button class="btn-close" on:click='{() => dispatch("close")}'>Cancel</button>
     </div>
   </div>
 </div>
