@@ -161,7 +161,7 @@
 
   .table td:first-child {
     text-align: center;
-    border-right: 3px solid #252c4a;
+    border-right: 1px solid #252c4a;
   }
 
   .table td small {
@@ -227,7 +227,6 @@
   }
 
   .crowns {
-    margin-right: 5px;
     width: 20px;
   }
 
@@ -278,8 +277,9 @@
                   <div class="crowns-container">
                     {#if (idx < 3) }
                       <img class="crowns" src="{getImageSource(crowns[idx])}" alt="crown"/>
+                    {:else}
+                      {idx+1}
                     {/if}
-                    {idx+1}
                   </div>
                 </td>
                 <td class="text-center">{@html osFilter(t.user_agent != undefined ? t.user_agent : '-')}</td>
