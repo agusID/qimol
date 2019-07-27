@@ -24,12 +24,12 @@
   let startstop = 0
 
   // check username is exists
-  if($username == null){
-    $username = prompt('Input your name : ')
-    while($username == null || $username.length == 0){
-      $username = prompt('Input your name : ')
-    }
-  }
+  // if($username == null){
+  //   $username = prompt('Input your name : ')
+  //   while($username == null || $username.length == 0){
+  //     $username = prompt('Input your name : ')
+  //   }
+  // }
 
   const MAX_SCORE = 100
 
@@ -365,6 +365,18 @@
     line-height: 1.5;
   }
   
+  svg {
+    fill: none;
+    stroke: white;
+    stroke-width: 2px;
+    visibility: visible;
+    width: 20px;
+    position: absolute;
+    right: 10px;
+    z-index: 99;
+    top: 11px;
+  }
+
   .not-visible {
     display: none;
   }
@@ -382,7 +394,7 @@
   [type="radio"]:not(:checked) + label {
     position: relative;
     padding: 10px;
-    padding-right: 28px;
+    padding-right: 40px;
     padding-left: 20px;
     cursor: pointer;
     display: block;
@@ -392,13 +404,26 @@
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
   }
+
   [type="radio"]:not(:checked) + label {
     color: #bdc3c7;
   }
+
   [type="radio"]:checked + label {
     background-color:rgb(18, 125, 233, 0.2);
     color: white;
   }
+
+  [type="radio"]:not(:checked)+ label > svg {
+    visibility: hidden;
+  }
+
+  [type="radio"]:checked + label > svg {
+    visibility: visible;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+  }
+
   [type="radio"]:checked + label:before,
   [type="radio"]:not(:checked) + label:before {
     content: '';
@@ -460,19 +485,35 @@
       <div class="answer-list">
         <div class="answer-item">
           <input id="A" type="radio" checked={answerChecked[0]} on:click={() => doAnswer(currQuestion, temp[currQuestion].unique_id, 1)} name="q-{currQuestion}-answer" />
-          <label class="answer-label" for="A">{temp[currQuestion].answer_1}</label>
+          <label class="answer-label" for="A">{temp[currQuestion].answer_1}
+            <svg viewBox="0 0 24 24">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </label>
         </div>
         <div class="answer-item">
           <input id="B" type="radio" checked={answerChecked[1]} on:click={() => doAnswer(currQuestion, temp[currQuestion].unique_id, 2)} name="q-{currQuestion}-answer" />
-          <label class="answer-label" for="B">{temp[currQuestion].answer_2}</label>
+          <label class="answer-label" for="B">{temp[currQuestion].answer_2}
+            <svg viewBox="0 0 24 24">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </label>
         </div>
         <div class="answer-item">
           <input id="C" type="radio" checked={answerChecked[2]} on:click={() => doAnswer(currQuestion, temp[currQuestion].unique_id, 3)} name="q-{currQuestion}-answer" />
-          <label class="answer-label" for="C">{temp[currQuestion].answer_3}</label>
+          <label class="answer-label" for="C">{temp[currQuestion].answer_3}
+            <svg viewBox="0 0 24 24">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </label>
         </div>
         <div class="answer-item">
           <input id="D" type="radio" checked={answerChecked[3]} on:click={() => doAnswer(currQuestion, temp[currQuestion].unique_id, 4)} name="q-{currQuestion}-answer" />
-          <label class="answer-label" for="D">{temp[currQuestion].answer_4}</label>
+          <label class="answer-label" for="D">{temp[currQuestion].answer_4}
+            <svg viewBox="0 0 24 24">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </label>
         </div>
       </div>
       <div class="btn-group">
