@@ -11,13 +11,32 @@
   let startGame = 0
   let participants = '?'
   let startGameConf = database.ref('app/start_game')
+  let milisec = 0
+  let sec = 0
+  let min = 0
+  let miliSecOut = 0
+  let secOut = 0
+  let minOut = 0
+  let tick = 0
+  let hideSplashScreen = false
+
+  // timer
+  let x
+  let startstop = 0
+  const MAX_SCORE = 100
 
   startGameConf.on('value', function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
       let childData = childSnapshot.val()
       startGame = childData
     }) 
-    startGame ? start() : stop()
+    if (startGame)
+      start()
+    else {
+      milisec = min = sec = 0
+      hideSplashScreen = false
+      stop()
+    }
   })
 
   let activeSubmit = false
@@ -26,19 +45,6 @@
 
   if ($username !== null) 
     writeScore(uniqueID, $username, 0, navigator.userAgent, '-', '-')
-
-  let milisec = 0
-  let sec = 0
-  let min = 0
-  let miliSecOut = 0
-  let secOut = 0
-  let minOut = 0
-  let tick = 0
-  
-  // timer
-  let x
-  let startstop = 0
-  const MAX_SCORE = 100
 
   usersRef.on('value', function(snapshot) {
     temp = []
@@ -153,7 +159,6 @@
     navigateTo('/')
   }
 
-  let hideSplashScreen = false
   function start() {
     let timeleft = 4
     let downloadTimer = setInterval(function(){
@@ -172,7 +177,6 @@
 
   function stop() {
     clearInterval(x)
-    min = milisec = sec = 0
   }
 
   function timer() {
