@@ -354,7 +354,7 @@
           <div class="definition-list">
             <input class="input" id="inputName" autocomplete="off" maxlength="50" bind:value={tempName} type="text">
           </div>
-          <button class="btn-play-modal" slot="play-button" class:disabled={tempName.length === 0} on:click={playGame}>Join</button>
+          <button class="btn-play-modal" slot="play-button" class:disabled={tempName.trim().length === 0} on:click={playGame}>Join</button>
         </Modal>
       {/if}
     {/if}
