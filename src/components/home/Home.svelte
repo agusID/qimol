@@ -1,6 +1,6 @@
 <script>
   import { navigateTo } from 'svero'
-  import { username, hasKey } from '@stores';
+  import { username, hasKey } from '@stores'
   import { database } from '@config/firebase'
   import { osFilter, getImageSource, cutText, sorted } from './utils'
   import Modal from './Modal.svelte'

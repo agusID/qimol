@@ -1,5 +1,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
+  import { fade, fly } from 'svelte/transition'
 
 	const dispatch = createEventDispatcher();
 </script>
@@ -84,9 +85,9 @@
 
 </style>
 
-<div class='modal-background' on:click='{() => dispatch("close")}'></div>
+<div class='modal-background' transition:fade="{{duration: 500}}" on:click='{() => dispatch("close")}'></div>
 
-<div class='modal'>
+<div class='modal' transition:fly="{{ y: 50, duration: 500 }}">
   <div class="modal-content">
     <div class="modal-header">
       <slot name='header'></slot>
