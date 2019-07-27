@@ -298,6 +298,7 @@
     font-size: 18px;
     min-height: 20vh;
     user-select: none;
+    line-height: 1.5;
   }
 
   .answer-list {
@@ -361,6 +362,7 @@
   .answer-label {
     display: block;
     user-select: none;
+    line-height: 1.5;
   }
   
   .not-visible {
@@ -381,7 +383,7 @@
     position: relative;
     padding: 10px;
     padding-right: 28px;
-    padding-left: 15px;
+    padding-left: 20px;
     cursor: pointer;
     display: block;
     width: 100%;
