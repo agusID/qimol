@@ -310,7 +310,7 @@
   <div class="helmet">
     <div class="helmet-accesories">
       <label class="helmet-title">Townhall Quiz</label>
-      <div class="accessories"><strong>{participants}</strong> participant(s)</div>
+      <div class="accessories"><strong>{participants}</strong> {participants > 1 ? 'participants' : 'participant'}</div>
     </div>
   </div>
   <div class="armour">
