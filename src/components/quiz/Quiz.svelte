@@ -156,6 +156,7 @@
   }
 
   function btnSubmit() {
+    localStorage.removeItem('USERNAME')
     let score = 0
     temp.forEach(function(value, index){
       if(value.correct_answer === userAnswer[index].answer)

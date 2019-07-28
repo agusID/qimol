@@ -52,10 +52,7 @@
         temp = [...temp, childData]
       if (childData.unique_id === UNIQUE_ID) {
         hasTakenQuiz = true
-        localStorage.removeItem('USERNAME')
       }
-        
-
     })
     temp = sorted(temp)
     participants = temp.length
