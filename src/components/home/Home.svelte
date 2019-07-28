@@ -172,7 +172,7 @@
     color: #ecf0f1;
   }
 
-  .table tr.active .time {
+  .table tr .time {
     background-color: #2c3e50;
   }
 
@@ -363,7 +363,7 @@
       {/if}
     </div>
     {#if FirebaseActiveButton}
-      {#if showModal}
+      {#if showModal && hasTakenQuiz == false}
         <Modal on:close="{() => showModal = false}">
           <div class="modal-slot-title" slot="header">
             Input Name
