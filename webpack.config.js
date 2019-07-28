@@ -30,7 +30,7 @@ function Copy(files) {
  */
 function FileLoader({isModeProduction}) {
   return {
-    test: /\.(png|jpe?g|gif|ico|mp3|wav|json)$/,
+    test: /\.(png|jpe?g|svg|gif|ico|mp3|wav|json)$/,
     use: [
       {
         loader: 'file-loader',

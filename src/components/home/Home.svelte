@@ -21,7 +21,7 @@
   const crowns = ['gold.png', 'silver.png', 'bronze.png']
   let temp = []
   let tempName = ''
-  let participants = 0
+  let participants = '?'
   let FirebaseActiveButton = true
   let FirebaseFreezeScoreboard = 0
 

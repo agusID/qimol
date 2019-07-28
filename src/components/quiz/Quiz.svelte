@@ -4,7 +4,9 @@
   import { database } from '@config/firebase'
   import { fade, fly } from 'svelte/transition'
   import { sorted } from './utils'
+  import Modal from './Modal.svelte'
 
+  let showModal = false
   let temp = []
   let tempUsers = []
   let totalQuestion = '?'
@@ -155,17 +157,22 @@
     return today
   }
 
+  let correctAnswer = 0
+  let score = 0
   function btnSubmit() {
     localStorage.removeItem('USERNAME')
-    let score = 0
+    score = 0
+    correctAnswer = 0
     temp.forEach(function(value, index){
-      if(value.correct_answer === userAnswer[index].answer)
+      if(value.correct_answer === userAnswer[index].answer) {
         score += (MAX_SCORE / totalQuestion)
+        correctAnswer++
+      }
     })
     stop()
     let time = `${min}m ${sec}s`
     writeScore(UNIQUE_ID, USERNAME, score, navigator.userAgent, tick, time, new Date().getTime())
-    navigateTo('/')
+    showModal = true
   }
 
   function start() {
@@ -573,6 +580,22 @@
     bottom: 20px;
     right: 20px;
   }
+
+  .btn-close {
+    user-select: none;
+    outline: none;
+    color: rgba(14,30,37,.87);
+    background-color: transparent;
+    margin-left: .25rem;
+    display: inline-block;
+    padding: 7px 15px;
+    font-size: 12px;
+    box-shadow: 0 2px 4px 0 rgba(14,30,37,.12);
+    border: 1px solid #e9ebeb;
+    border-bottom: 1px solid #e1e2e4;
+    border-radius: 4px;
+    transition: .2s ease;
+  }
 </style>
 <div class="container">
   {#if startGame}
@@ -635,6 +658,23 @@
           <button class="btn btn-next" class:not-visible="{currQuestion === totalQuestion - 1}" on:click={btnNext}>Next</button>
           <button class="btn btn-submit" class:disabled={!activeSubmit} class:visible="{currQuestion >= totalQuestion - 1}" on:click={btnSubmit}>Submit</button>
         </div>
+        {#if showModal}
+          <Modal on:close="{() => showModal = false}">
+            <div class="modal-slot-title" slot="header">
+              {#if (score == 100)}
+                Wow, You're Perfect!
+              {:else if (score >= 80 )}
+                You're Amazing
+              {:else if (score >= 50)} 
+                Good Result
+              {:else}
+                Good luck on the next quiz
+              {/if}
+            </div>
+            <div slot="description">Thank you for completing this quiz. You get a score of <strong>{score}</strong> by answering <strong>{correctAnswer > 1 ? `${correctAnswer} questions` : `${correctAnswer} question`}</strong> correctly from <strong>{totalQuestion} questions</strong>.</div>
+            <button class="btn-close" slot="action-button" on:click={() => navigateTo('/') }>Go to Leaderboard</button>
+          </Modal>
+        {/if}
       {:else}
         <div class="loader-container" out:fade="{{ duration: 500}}">
           <div class="loader"></div>
