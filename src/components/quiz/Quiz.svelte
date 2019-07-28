@@ -42,11 +42,13 @@
   })
 
   let activeSubmit = false
-  let uniqueID = $lastKey == null ?  Math.random().toString(36).substring(7) : $lastKey
-  lastKey.update(value => value = uniqueID)
+  let UNIQUE_ID = localStorage.getItem('UNIQUE_ID')
+  let USERNAME = localStorage.getItem('USERNAME')
 
-  if ($username !== null) 
-    writeScore(uniqueID, $username, 0, navigator.userAgent, '-', '-', new Date().getTime())
+  if (USERNAME !== null) 
+    writeScore(UNIQUE_ID, USERNAME, 0, navigator.userAgent, '-', '-', new Date().getTime())
+  else
+    navigateTo('/')
 
   function loadQuestion() {
     usersRef.on('value', function(snapshot) {
@@ -161,7 +163,7 @@
     })
     stop()
     let time = `${min}m ${sec}s`
-    writeScore(uniqueID, $username, score, navigator.userAgent, tick, time, new Date().getTime())
+    writeScore(UNIQUE_ID, USERNAME, score, navigator.userAgent, tick, time, new Date().getTime())
     navigateTo('/')
   }
 
@@ -207,6 +209,12 @@
 
   function checkTime(i) {
     return (i < 10) ? `0${i}` : i
+  }
+
+  function exitLobby () {
+    database.ref(`scoreboard/${UNIQUE_ID}`).remove()
+    hasKey.update(value => value = null)
+    navigateTo('/')
   }
 
 </script>
@@ -542,6 +550,27 @@
     background: #107eeb;
     border: 2px solid #107eeb;
   }
+
+  .btn-exit-lobby {
+    outline: none;
+    color: rgba(14,30,37,.87);
+    text-decoration: none;
+    border: 1px solid #e9ebeb;
+    border-bottom: 1px solid #e1e2e4;
+    padding: 7px 15px;
+    text-align: center;
+    font-size: 16px;
+    background-color: white;
+    border-radius: 4px;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    margin: 0 auto;
+    user-select: none;
+    box-shadow: 0 2px 4px 0 rgba(14,30,37,.12);
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
 </style>
 <div class="container">
   {#if startGame}
@@ -618,8 +647,9 @@
         {#each tempUsers as t, idx}
           <div class="user-name" transition:fade="{{ duration: 500 }}" class:user-active={t.unique_id === $hasKey}>{t.username}</div>
         {/each }
+        <div class="btn-exit-lobby" on:click={exitLobby}>Exit Lobby</div>
       </div>
-
+      
     </div>
   {/if}
 </div>

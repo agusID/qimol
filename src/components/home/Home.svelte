@@ -3,7 +3,18 @@
   import { username, hasKey } from '@stores'
   import { database } from '@config/firebase'
   import { osFilter, getImageSource, cutText, sorted } from './utils'
+  import { fade, fly } from 'svelte/transition'
   import Modal from './Modal.svelte'
+
+  const UNIQUE_ID = localStorage.getItem('UNIQUE_ID')
+  let hasUniqueID = UNIQUE_ID
+  let hasUserName = localStorage.getItem('USERNAME')
+  if(hasUniqueID == null) {
+    let _uniqueID = Math.random().toString(36).substring(7)
+    localStorage.setItem('UNIQUE_ID', _uniqueID)
+  }
+
+  let loadingStatus = 'Please wait a few seconds...'
 
   let showModal = false
 
@@ -30,8 +41,8 @@
     }) 
   })
 
-
-   // get score data
+  // get score data
+  let hasTakenQuiz = false
   let usersRef = database.ref('scoreboard')
   usersRef.on('value', function(snapshot) {
     temp = []
@@ -39,18 +50,27 @@
       let childData = childSnapshot.val()
       if(childData.score != undefined && childData.time !== '-')
         temp = [...temp, childData]
+      if (childData.unique_id === UNIQUE_ID) {
+        hasTakenQuiz = true
+        localStorage.removeItem('USERNAME')
+      }
+        
+
     })
     temp = sorted(temp)
     participants = temp.length
+    loadingStatus = (participants == 0) ? 'no participant(s)' : 'Please wait a few seconds...'
   })
 
   function playGame() {
-    if (!$hasKey) {
-      $username = tempName.trim()
-      $username = $username.trim()
-      if ($username) navigateTo('/quiz')
-    } else 
-      alert('You has been take a quiz before.')
+    if (hasUserName == null) {
+      localStorage.setItem('USERNAME', tempName.trim())
+      navigateTo('/quiz')
+    } else {
+      console.log('You has been take a quiz before.')
+      // navigateTo('/quiz')
+    }
+
   }
 
   function handleModal() {
@@ -228,16 +248,18 @@
     color: white;
     text-decoration: none;
     border: none;
-    border-radius: 20px;
-    padding: 10px 15px;
+    border-radius: 4px;
+    padding: 7px 15px;
     text-align: center;
-    font-size: 20px;
+    font-size: 16px;
     background-color: #107eeb;
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
     margin: 0 auto;
-    margin-bottom: 20px;
     user-select: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
   }
 
   .modal-slot-title {
@@ -297,7 +319,7 @@
   <div class="armour">
     {#if FirebaseFreezeScoreboard}
       <p>scoreboard is freezed</p>
-    {:else if temp.length >= 0}
+    {:else if temp.length > 0}
       <table class="table">
         <thead>
           <tr>
@@ -307,45 +329,43 @@
           </tr>
         </thead>
         <tbody>
-          {#if temp.length == 0}
-            <tr>
-              <td colspan="5">no participant(s)</td>
+          {#each temp as t, idx}
+            <tr class:active="{t.unique_id === UNIQUE_ID}" transition:fade="{{duration: 500}}">
+              <td>
+                <div class="crowns-container">
+                  {#if (idx < 3) }
+                    <img class="crowns" src="{getImageSource(crowns[idx])}" alt="crown"/>
+                  {:else}
+                    {idx+1}
+                  {/if}
+                </div>
+              </td>
+              <td class="text-center">{@html osFilter(t.user_agent != undefined ? t.user_agent : '-')}</td>
+              <td>  
+                <div>{t.username}</div>
+                <small class="user-agent">{cutText(t.user_agent)}</small>
+              </td>
+              <td class="text-center">
+                <div class="score bold">{t.score}</div>
+                <small class="time">{t.time}</small>
+              </td>
             </tr>
-          {:else}
-            {#each temp as t, idx}
-              <tr class:active="{t.unique_id === $hasKey}" >
-                <td>
-                  <div class="crowns-container">
-                    {#if (idx < 3) }
-                      <img class="crowns" src="{getImageSource(crowns[idx])}" alt="crown"/>
-                    {:else}
-                      {idx+1}
-                    {/if}
-                  </div>
-                </td>
-                <td class="text-center">{@html osFilter(t.user_agent != undefined ? t.user_agent : '-')}</td>
-                <td>  
-                  <div>{t.username}</div>
-                  <small class="user-agent">{cutText(t.user_agent)}</small>
-                </td>
-                <td class="text-center">
-                  <div class="score bold">{t.score}</div>
-                  <small class="time">{t.time}</small>
-                </td>
-              </tr>
-            {/each}
-          {/if}
+          {/each}
         </tbody>
       </table>
     {:else}
-      <p>Please wait a few seconds...</p>
+      <p>{loadingStatus}</p>
     {/if}
-    {#if FirebaseActiveButton}
-      <div class="shoes">
-        {#if !$hasKey}
-          <div class="btn-play" on:click="{() => handleModal()}">Join Quiz</div>
+    <div class="shoes">
+      {#if !$hasKey}
+        {#if hasUserName == null && hasTakenQuiz == false}
+          <div class="btn-play" on:click="{() => handleModal()}" transition:fade="{{duration: 500}}">Join Quiz</div>
+        {:else if (!hasTakenQuiz)}
+          <div class="btn-play" on:click="{() => navigateTo('/quiz')}" transition:fade="{{duration: 500}}">Back to Lobby</div>
         {/if}
-      </div>
+      {/if}
+    </div>
+    {#if FirebaseActiveButton}
       {#if showModal}
         <Modal on:close="{() => showModal = false}">
           <div class="modal-slot-title" slot="header">
