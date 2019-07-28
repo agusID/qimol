@@ -397,6 +397,7 @@
     display: block;
     user-select: none;
     line-height: 1.5;
+    font-size: 14px;
   }
   
   svg {
