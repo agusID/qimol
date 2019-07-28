@@ -309,7 +309,7 @@
 <div class="container">
   <div class="helmet">
     <div class="helmet-accesories">
-      <label class="helmet-title">Townhall Quiz</label>
+      <label class="helmet-title">TownHall Quiz</label>
       <div class="accessories"><strong>{participants}</strong> {participants > 1 ? 'participants' : 'participant'}</div>
     </div>
   </div>
