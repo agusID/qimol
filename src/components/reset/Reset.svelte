@@ -49,7 +49,7 @@
       answer_2: answer_2,
       answer_3: answer_3,
       answer_4: answer_4,
-      correct_answer: correct_answer,
+      correct_answer: parseInt(correct_answer, 10),
       question: question,
       unique_id: uniqueID,
     }, function(error) {
