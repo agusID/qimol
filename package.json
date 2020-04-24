@@ -1,5 +1,5 @@
 {
-  "name": "townhall",
+  "name": "qimol",
   "version": "1.0.0",
   "main": "index.js",
   "author": "agusdwi <dwi.agustianto@ralali.com>",
@@ -27,7 +27,7 @@
     "svelte": "^3.6.5",
     "svero": "^0.5.0"
   },
-  "description": "townhall quiz",
+  "description": "quiz mobile",
   "directories": {
     "doc": "docs"
   },

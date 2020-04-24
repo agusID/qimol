@@ -1,31 +1,92 @@
 {
-    "question": [{
-        "answer_1" : "Ralali",
-        "answer_2" : "Rak Rali",
-        "answer_3" : "Lali Rak",
-        "answer_4" : "Raksasa Laju Lintang",
-        "correct_answer" : 4,
-        "question" : "Kepanjangan dari Ralali.com?"
-    },{
-        "answer_1" : "6 tahun",
-        "answer_2" : "2 tahun",
-        "answer_3" : "3 tahun",
-        "answer_4" : "1 tahun",
-        "correct_answer" : 1,
-        "question" : "Berapa umur ralali?"
-    },{
-        "answer_1" : "Joseph Adibtya",
-        "answer_2" : "Joseph Aditya",
-        "answer_3" : "Kang mus",
-        "answer_4" : "Mba Desi",
-        "correct_answer" : 2,
-        "question" : "Siapa CEO Ralali?"
-    },{
-        "answer_1" : "Willy Brordus",
-        "answer_2" : "William Notonegoro",
-        "answer_3" : "William Tanurwijaya",
-        "answer_4" : "Mas Echo",
-        "correct_answer" : 2,
-        "question" : "Siapa Head of Engineer Ralali"
-    }]
+    "question": [
+    {
+        "answer_1": "Visualization",
+        "answer_2": "Impactful words",
+        "answer_3": "Enjoyment",
+        "answer_4": "Right mindset",
+        "correct_answer": 3,
+        "question": "Mana yang bukan role dari team Marketing Ralali?"
+    },
+    {
+        "answer_1": "Mindset",
+        "answer_2": "Performance",
+        "answer_3": "Development",
+        "answer_4": "Enjoyment",
+        "correct_answer": 1,
+        "question": "Apa yang bukan menjadi penggerak Ralalian memberikan impact?"
+    },
+    {
+        "answer_1": "Visionary, Unstable, Crazy, Abnormal",
+        "answer_2": "Volatile, Uncertain, Crazy, Ambivalent",
+        "answer_3": "Visionary, Unknown, Complex, Ambigu",
+        "answer_4": "Volatile, Uncertain, Complex, Ambigu",
+        "correct_answer": 4,
+        "question": "Bisnis saat ini sangat dinamis = VUCA. Apa kepanjangan VUCA?"
+    },
+    {
+        "answer_1": "Governance",
+        "answer_2": "Data",
+        "answer_3": "Foundation",
+        "answer_4": "Application",
+        "correct_answer": 3,
+        "question": "Berdasarkan digital economy layer, Ralali.com sedang berada di layer mana?"
+    },
+    {
+        "answer_1": "E-commerce",
+        "answer_2": "Small retailers",
+        "answer_3": "Culinary shops",
+        "answer_4": "Distributors",
+        "correct_answer": 2,
+        "question": "Siapa yang menyebabkan retailer besar kian berkurang?"
+    },
+    {
+        "answer_1": "Wild dog",
+        "answer_2": "Wild bull",
+        "answer_3": "Dead rabbit",
+        "answer_4": "Dead wood",
+        "correct_answer": 4,
+        "question": "Mana tipe human asset valuation yang paling merugikan perusahaan?"
+    },
+    {
+        "answer_1": "2 stars - 7 bull - 1 dead wood",
+        "answer_2": "2 stars - 1 wild dog - 7 bull",
+        "answer_3": "1 dead wood - 2 rabbit - 7 stars",
+        "answer_4": "1 star - 7 bull - 2 dead wo",
+        "correct_answer": 1,
+        "question": "Formasi human asset value mapping terbaik untuk Ralali.com?"
+    },
+    {
+        "answer_1": "Datang dari hati",
+        "answer_2": "Fokus pada manusia",
+        "answer_3": "Bicara soal bagaimana",
+        "answer_4": "Memotivasi setiap hari",
+        "correct_answer": 3,
+        "question": "Mana yang tidak benar tentang mission?"
+    },
+    {
+        "answer_1": "1 - 1 - 8",
+        "answer_2": "1 - 1 - 8 - 80",
+        "answer_3": "1 - 1 - 6",
+        "answer_4": "1 - 1 - 6- 80",
+        "correct_answer": 3,
+        "question": "Bagaimana strategi marketing Ralali.com saat ini?"
+    },
+    {
+        "answer_1": "1 SIXnificant channel",
+        "answer_2": "1 SIXnificant impact",
+        "answer_3": "1 SIXnificant promo",
+        "answer_4": "6 SIXnificant issues",
+        "correct_answer": 2,
+        "question": "Mana yang bukan visi bulanan marketing?"
+    },
+    {
+        "answer_1": "60 juta UMKM",
+        "answer_2": "10 juta UMKM",
+        "answer_3": "1 juta UMKM",
+        "answer_4": "500rb UMKM",
+        "correct_answer": 4,
+        "question": "Berapa jumlah target app download Ralali.com semester 2?"
+    }
+    ]
 }

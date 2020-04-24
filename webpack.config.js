@@ -134,7 +134,7 @@ function webpackConfig(environment) {
 
     plugins: [
       createHTML({
-        title: 'TOWNHALL - Beyond To Be Sixnificant',
+        title: 'Qimol - Quiz Mobile',
         template: appResolve('public/index.html'),
       }),
 
